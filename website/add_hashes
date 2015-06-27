@@ -6,8 +6,13 @@ import argparse
 from website.passwords.models import Dumps
 from website.passwords.models import Passwords
 
+
 def run(hashfile, dumpname, hashtype):
-    d, created = Dumps.objects.get_or_create(dump=dumpname, hashtype=hashtype)
+    d, created = Dumps.objects.get_or_create(
+        dump=dumpname,
+        hashtype=hashtype,
+        hash_file=os.path.join('website/static/hashes', dumpname),
+        password_file=os.path.join('website/static/hashes', dumpname))
     try:d.save()
     except django.db.utils.IntegrityError:pass
     p = []
@@ -16,6 +21,9 @@ def run(hashfile, dumpname, hashtype):
         if len(p) > 10000:
             Passwords.objects.bulk_create(p)
             del p[:]
+    Passwords.objects.bulk_create(p)
+    d.hash_count=Passwords.objects.filter(dump=d).count()
+    d.save()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

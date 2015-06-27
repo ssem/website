@@ -1,0 +1,12 @@
+{% extends "passwords/base.html" %}
+
+{% block main %}
+
+{% for dump in dumps %}
+    {{dump.dump}}
+    {{dump.hashtype}}
+    {{dump.hash_count}}
+    {{dump.cracked}}
+{% endfor %}
+
+{% endblock %}

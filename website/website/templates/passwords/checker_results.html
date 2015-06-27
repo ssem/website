@@ -1,0 +1,12 @@
+{% extends "passwords/base.html" %}
+
+{% block main %}
+
+<div class="password-list">
+    <p> {{hashstring}} </p>
+    <p> {{password}} </p>
+    <p> {{dump}} </p>
+    <p> {{hashtype}} </p>
+</div>
+
+{% endblock %}
