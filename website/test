@@ -1,0 +1,55 @@
+DUMP="insidepro"
+HASHTYPE="multi"
+
+./add_hashes ~/hashes/bob/xfa ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfa
+./add_hashes ~/hashes/bob/xfb ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfb
+./add_hashes ~/hashes/bob/xfc ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfc
+./add_hashes ~/hashes/bob/xfd ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfd
+./add_hashes ~/hashes/bob/xfe ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfe
+./add_hashes ~/hashes/bob/xff ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xff
+./add_hashes ~/hashes/bob/xfg ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfg
+./add_hashes ~/hashes/bob/xfh ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfh
+./add_hashes ~/hashes/bob/xfi ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfi
+./add_hashes ~/hashes/bob/xfj ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfj
+./add_hashes ~/hashes/bob/xfk ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfk
+./add_hashes ~/hashes/bob/xfl ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfl
+./add_hashes ~/hashes/bob/xfm ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfm
+./add_hashes ~/hashes/bob/xfn ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfn
+./add_hashes ~/hashes/bob/xfo ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfo
+./add_hashes ~/hashes/bob/xfp ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfp
+./add_hashes ~/hashes/bob/xfq ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfq
+./add_hashes ~/hashes/bob/xfr ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfr
+./add_hashes ~/hashes/bob/xfs ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfs
+./add_hashes ~/hashes/bob/xft ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xft
+./add_hashes ~/hashes/bob/xfu ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfu
+./add_hashes ~/hashes/bob/xfv ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfv
+./add_hashes ~/hashes/bob/xfw ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfw
+./add_hashes ~/hashes/bob/xfx ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfx
+./add_hashes ~/hashes/bob/xfy ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfy
+./add_hashes ~/hashes/bob/xfz ${DUMP} ${HASHTYPE}
+rm ~/hashes/bob/xfz
