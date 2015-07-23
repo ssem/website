@@ -2,11 +2,12 @@
 
 {% block main %}
 
-{% for dump in dumps %}
-    {{dump.dump}}
-    {{dump.hashtype}}
-    {{dump.hash_count}}
-    {{dump.cracked}}
+{% for result in results %}
+    {{result.name}}
+    {{result.hashtype}}
+    {{result.hash_count}}
+    {{result.cracked}}
+    {{result.percent}}
     </br>
 {% endfor %}
 

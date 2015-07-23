@@ -9,14 +9,15 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', main.home),
 
-    url(r'^passwords/$', passwords.password_checker),
+    url(r'^passwords/$', passwords.hashes),
+    url(r'^passwords/hashes/$', passwords.hashes),
     url(r'^passwords/password_checker/$', passwords.password_checker),
     url(r'^passwords/password_checker/hash/(?P<hashstring>\w+)/$',
         passwords.password_check_hash),
     url(r'^passwords/password_checker/password/(?P<password>\w+)/$',
         passwords.password_check_password),
-    url(r'^passwords/hashes/$', passwords.hashes),
-    url(r'^passwords/raw_hashes/(?P<dump>\w+)/$', passwords.raw_hashes),
+    #url(r'^passwords/raw_hashes/dump/(?P<dump>\w+)/$', passwords.raw_dump),
+    #url(r'^passwords/raw_hashes/type/(?P<hashtype>\w+)/$', passwords.raw_type),
 
     url(r'^scanner/$', scanner.map),
     url(r'^scanner/map/$', scanner.map),
