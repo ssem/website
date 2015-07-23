@@ -1,6 +1,0 @@
-*.pyc
-*.swp
-build
-databases
-website/settings.py
-website/static
