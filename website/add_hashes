@@ -10,6 +10,7 @@ from website.passwords.models import Dumps
 def run(hashfile, dumpname, hashtype):
     hash_file = os.path.join('website/static/hashes', dumpname)
     password_file = os.path.join('website/static/passwords', dumpname)
+    stat_file = os.path.join('website/static/stats', dumpname)
     d, created = Dumps.objects.get_or_create(
         name=dumpname,
         hashtype=hashtype)
@@ -20,9 +21,11 @@ def run(hashfile, dumpname, hashtype):
         count += 1
     d.hash_count=count
     d.cracked = 0
-    d.hash_file = hash_file
-    d.password_filge = password_file
+    d.hash_file = hash_file.lstrip('website')
+    d.password_file = password_file.lstrip('website')
+    d.stat_file = stat_file.lstrip('website')
     d.save()
+    open(stat_file, 'w+')
     shutil.copyfile(hashfile, hash_file)
     shutil.copyfile(hashfile, password_file)
 

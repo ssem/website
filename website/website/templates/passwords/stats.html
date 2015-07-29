@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block nav %}
+    <ul class="nav nav-tabs">
+        <li><a href="/">Home</a></li>
+        <li class="active"><a href="/passwords/hashes/">Hashes</a></li>
+        <li><a href="/passwords/password_checker/">Password Checker</a></li>
+    </ul>
+{% endblock %}
+
+{% block main %}
+    {% autoescape off %}
+    {% for result in results %}
+        {{result}}
+    {% endfor %}
+    {% endautoescape %}
+{% endblock %}

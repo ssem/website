@@ -7,10 +7,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^test$', main.test),
     url(r'^$', main.home),
 
     url(r'^passwords/$', passwords.hashes),
     url(r'^passwords/hashes/$', passwords.hashes),
+    url(r'^passwords/hashes/stats/(?P<stats_file>\S+)/$', passwords.stats),
     url(r'^passwords/password_checker/$', passwords.password_checker),
     url(r'^passwords/password_checker/hash/(?P<hashstring>\w+)/$',
         passwords.password_check_hash),
@@ -21,6 +23,7 @@ urlpatterns = patterns('',
 
     url(r'^scanner/$', scanner.map),
     url(r'^scanner/map/$', scanner.map),
+    url(r'^scanner/search/$', scanner.search),
     url(r'^scanner/port/\w*/$', scanner.port),
     url(r'^scanner/country/\w*/$', scanner.country),
 

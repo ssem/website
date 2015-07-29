@@ -7,6 +7,7 @@ class Dumps(models.Model):
     cracked = models.CharField(max_length=30)
     hash_file = models.CharField(max_length=100)
     password_file = models.CharField(max_length=100)
+    stat_file = models.CharField(max_length=100)
 
     class Meta:
         unique_together = (("name", "hashtype"),)

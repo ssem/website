@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% block title %}
-            ssem
-        {% endblock %}
         {% block header %}
-        {% endblock %}
-    <head>
+            <link href="/static/css/base.css" rel="stylesheet" type="text/css" />
+            <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" />
 
-    <body>
+        {% endblock %}
+        {% block title %}
+            <div class=title>FLATLINE</div>
+        {% endblock %}
         {% block nav %}
         {% endblock %}
-        {% block main %}
+    </head>
+    <body>
+        {% block body %}
+            </br>
+            <div style="height:100%; width:70%; background-color:#252525; margin:auto; border-radius:3px; border:20px solid #252525;">
+                {% block main %}
+                {% endblock %}
+            </div>
         {% endblock %}
     </body>
+    <footer>
+        {% block footer %}
+
+        {% endblock %}
+    </footer>
 </html>
