@@ -2,6 +2,6 @@
 *.swp
 hashes
 plists
-website/databases
-website/website/settings.py
-website/website/static
+backup
+website/settings.py
+website/static

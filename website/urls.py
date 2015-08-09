@@ -1,4 +1,5 @@
 import view as main
+from blog import view as blog
 from passwords import view as passwords
 from scanner import view as scanner
 from malware import view as malware
@@ -9,6 +10,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^test$', main.test),
     url(r'^$', main.home),
+
+    url(r'^blog/$', blog.home),
+    url(r'^blog/(?P<blog>\S+)/$', blog.blog),
 
     url(r'^passwords/$', passwords.hashes),
     url(r'^passwords/hashes/$', passwords.hashes),

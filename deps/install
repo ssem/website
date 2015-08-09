@@ -1,0 +1,26 @@
+#!/bin/sh
+
+CWD=`pwd`
+sudo apt-get update
+
+### django ###
+sudo apt-get install -y python-django
+
+### apache ###
+sudo apt-get install -y apache2
+
+### mongodb ###
+sudo apt-get install python-mongodb
+sudo apt-get install python-pymongo
+
+### mysql ###
+#sudo apt-get install -y mysql-server
+#sudo apt-get install -y python-mysqldb
+
+### twitter bootstrap ###
+mkdir ~/tools
+cd ~/tools
+git clone https://github.com/dyve/django-bootstrap3
+cd django-bootstrap3
+sudo python setup.py install
+cd ${CWD}
