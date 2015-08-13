@@ -1,25 +1,19 @@
 import os
 import re
+import pymongo
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from website.passwords.models import Dumps
 
 
 def hashes(request):
-    results = []
-    for dump in Dumps.objects.all():
-        try:p = round(float(dump.cracked)/float(dump.hash_count) * 100, 2)
-        except:p = 0
-        try:stat_file = os.path.basename(dump.stat_file)
-        except:stat_file=None
-        results.append({'name': dump.name,
-                        'hashtype': dump.hashtype,
-                        'hash_count': dump.hash_count,
-                        'cracked': dump.cracked,
-                        'hash_file': dump.hash_file,
-                        'password_file': dump.password_file,
-                        'stat_file': stat_file,
-                        'percent': p})
+    client = pymongo.MongoClient('localhost', 27017)
+    db = client['website']
+    results = list(db['dumps'].find())
+    for dump in results:
+        try:dump['percent'] = round(float(dump['cracked'])/float(dump['hash_count']) * 100, 2)
+        except:dump['percent'] = 0
+        try:dump['stat_file'] = os.path.basename(dump['stat_file'])
+        except:dump['stat_file'] = "/404.html"
     return render_to_response('passwords/hashes.html',
         {"results": results})
 
@@ -32,59 +26,49 @@ def stats(request, stats_file):
         {'results':results})
 
 def password_checker(request):
+    request_type = request.GET.get('type')
+    if request_type == 'hash':
+        hashstring = request.GET.get('input')
+        return _password_check_hash(hashstring)
+    elif request_type == 'password':
+        password = request.GET.get('input')
+        return _password_check_password(password)
     return render_to_response('passwords/password_checker.html')
 
-def password_check_hash(request, hashstring):
-    message = []
-    for d in Dumps.objects.all():
-        for line in open('website/%s' % d.password_file, 'r'):
-            if re.search('^%s:' % hashstring, line):
-                password = line.split(':')[1]
-                message.append('Hash Type: %s' % d.hashtype)
-                message.append('Database Leak: %s' % d.name)
-                try:percent = float(d.cracked) / float(d.hash_count) * 100
-                except:percent = 0
-                message.append('Database Cracked: {:.2f}' .format(percent))
-                message.append('')
-    if len(message) > 1:
-        message.insert(0, "")
-        message.insert(0, "pick a better password: %s" % password)
-        return render_to_response('passwords/password_checker.html',
-            {"results": message})
+def _password_check_hash(hashstring):
+    results = []
+    password = ""
+    client = pymongo.MongoClient('localhost', 27017)
+    db = client['website']
+    for dump in db['dumps'].find():
+        result = db[dump['name']].find({'hash': hashstring})
+        if result.count() > 0:
+            tmp = result[0]['password']
+            if len(tmp) > len(password):
+                password = tmp
+            results.append({'hashstring': hashstring,
+                            'hashtype': dump['hashtype'],
+                            'dump': dump['name']})
+    if len(results) > 0:
+        message = "I've cracked: \"%s\"" % password
     else:
-        return render_to_response('passwords/password_checker.html',
-            {"results": ["I have not cracked: %s" % hashstring]})
+        message = "I have NOT cracked: \"%s\"" % hashstring
+    return render_to_response('passwords/password_checker.html',
+        {"message": message, "results":results})
 
-def password_check_password(request, password):
-    message = []
-    for d in Dumps.objects.all():
-        for line in open('website/%s' % d.password_file, 'r'):
-            if re.search(':%s$' % password, line):
-                message.append('Hash: %s' % line.split(':')[0])
-                message.append('Hash Type: %s' % d.hashtype)
-                message.append('Database Leak: %s' % d.name)
-                try:percent = float(d.cracked) / float(d.hash_count) * 100
-                except:percent = 0
-                message.append('Database Cracked: {:.2f}%'.format(percent))
-                message.append('')
-    if len(message) > 1:
-        message.insert(0, "")
-        message.insert(0, "pick a better password: %s" % password)
-        return render_to_response('passwords/password_checker.html',
-            {"results": message})
+def _password_check_password(password):
+    results = []
+    client = pymongo.MongoClient('localhost', 27017)
+    db = client['website']
+    for dump in db['dumps'].find():
+        result = db[dump['name']].find({'password': password})
+        if result.count() > 0:
+            results.append({'hashstring': result[0]['hash'],
+                            'hashtype': dump['hashtype'],
+                            'dump': dump['name']})
+    if len(results) > 0:
+        message = "I've cracked: \"%s\"" % password
     else:
-        return render_to_response('passwords/password_checker.html',
-            {"results": ["I have not cracked: %s" % password]})
-
-def raw_dump(request, dump):
-    dump = Dumps.objects.get(dump=dump)
-    hashes = Passwords.objects.filter(dump=dump)
-    return render_to_response('passwords/raw_hashes.html',
-        {'hashes': hashes})
-
-def raw_type(request, hashtype):
-    hashes = []
-    for dump in Dumps.objects.filter(hashtype=hashtype):
-        pass
-    return render_to_response('passwords/raw_hashes.html',
-        {'hashes': ''})
+        message = "I have NOT cracked: \"%s\"" % password
+    return render_to_response('passwords/password_checker.html',
+        {"message": message, "results":results})

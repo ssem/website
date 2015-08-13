@@ -1,32 +1,26 @@
 {% extends "base.html" %}
 
-{% block nav %}
-    <ul class="nav nav-tabs">
-        <li><a href="/">Home</a></li>
-        <li class="active"><a href="/passwords/hashes/">Hashes</a></li>
-        <li><a href="/passwords/password_checker/">Password Checker</a></li>
-    </ul>
-{% endblock %}
-
 {% block main %}
+    <div style="margin:0 auto; width:700px">
     <table class="table-condensed">
     <tr>
-        <td>Name</td>
-        <td>Hash Type</td>
-        <td>Total Hashes</td>
-        <td>Hashes Cracked</td>
-        <td>Percent Cracked</td>
-        <td>Stats</td>
+        <td><label>Name</label></td>
+        <td><label>Type</label></td>
+        <td><label>Cracked<label></td>
+        <td><label>Total</label></td>
+        <td><label>Percent</label></td>
+        <td><label>Stats</label></td>
     </tr>
     {% for result in results %}
         <tr>
-            <td><a style="color:#00FE00" href={{result.hash_file}}>{{result.name}}</a></td>
-            <td>{{result.hashtype}}</td>
-            <td>{{result.hash_count}}</td>
-            <td>{{result.cracked}}</td>
-            <td>{{result.percent}} %</td>
+            <td><a href="/static/passwords/{{result.name}}">{{result.name}}</a></td>
+            <td><p>{{result.hashtype}}</p></td>
+            <td><p>{{result.cracked}}</p></td>
+            <td><p>{{result.hash_count}}</p></td>
+            <td><p>{{result.percent}} %</p></td>
             <td><a style="color:#00FE00" href=/passwords/hashes/stats/{{result.stat_file}}>stats</a></td>
         </tr>
     {% endfor %}
     </table>
+    </div>
 {% endblock %}

@@ -1,13 +1,84 @@
 {% extends "base.html" %}
 
-{% block nav %}
-    <ul class="nav nav-tabs">
-        <li><a href="/">Home</a></li>
-        <li><a href="/scanner/map/">Map</a></li>
-        <li class="active"><a href="/scanner/search/">Search</a></li>
-    </ul>
-{% endblock %}
-
 {% block main %}
-    <a>search</a>
+    <script>
+    function genurl()
+    {
+        var url = "/scanner/search/?"
+        var textbox = document.getElementsByName("input")[0].value;
+        if ( textbox.indexOf("ip:") >= 0){
+            var re = /ip:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/g
+            var ip = re.exec(textbox)
+            if ( ip ){
+                url = url + "ip=" + ip[0].slice(3) + ";";
+                textbox = textbox.replace(ip[0], "");
+            }
+        }
+        if ( textbox.indexOf("port:") >= 0)
+        {
+            var re = /port:\d{1,5}/g
+            var port = re.exec(textbox)
+            if ( port ){
+                url = url + "port=" + port[0].slice(5) + ";";
+                textbox = textbox.replace(port[0], "");
+            }
+        }
+        if ( textbox.indexOf("country:") >= 0)
+        {
+            var re = /country:\S*/g
+            var country = re.exec(textbox)
+            if ( country ){
+                url = url + "country=" + country[0].slice(8) + ";";
+                textbox = textbox.replace(country[0], "");
+            }
+        }
+        if ( textbox.indexOf('exploit:') >= 0)
+        {
+            var re = /exploit:\S*/g
+            var exploit = re.exec(textbox)
+            if ( exploit ){
+                url = url + "exploit=" + exploit[0].slice(8) + ";";
+                textbox = textbox.replace(exploit[0], "");
+            }
+        }
+        if ( textbox.indexOf('protocol:') >= 0)
+        {
+            var re = /protocol:(tcp|udp)/g
+            var protocol = re.exec(textbox)
+            if ( protocol ){
+                url = url + "protocol=" + protocol[0].slice(9) + ";";
+                textbox = textbox.replace(protocol[0], "");
+            }
+        }
+        url = url + "banner=" + textbox + ";";
+        window.location.href = url;
+    }
+    </script>
+
+    <div style="margin:0 auto; width:500px;">
+        <input class=txtbox type="text" style="width:500px;" name=input>
+    </div>
+    <div style="margin:0 auto; width:75px">
+        <button class=btn style="width:75px" onclick=genurl()>search</button>
+    </div>
+    <h5 style="text-align:right;">total: {{count}}</h5>
+    <div style="clear:both;"></br></div>
+    {% for result in results %}
+        <div style="float:left; width:250px;">
+            <ul>
+                <label>ip:</label> <a href="{{result.target_url}}">{{result.ip}}</a></br>
+                <label>port:</label> {{result.port}}</br>
+                <label>exploit:</label> {{result.exploit}}</br>
+                <label>timestamp:</label> {{result.time}}</br>
+                <label>protocol:</label> {{result.protocol}}</br>
+                <label>country:</label> {{result.country}}</br>
+            </ul>
+        </div>
+        <div style="float:right; text-align:left; width:60%;">
+            {% for line in result.banner %}
+                <p>{{line}}<p>
+            {% endfor %}
+        </div>
+        <div style="clear:both;"></br></br></div>
+    {% endfor %}
 {% endblock %}

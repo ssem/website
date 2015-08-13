@@ -4,12 +4,34 @@
         {% block header %}
             <link href="/static/css/base.css" rel="stylesheet" type="text/css" />
             <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" />
-
+            <script src="/static/js/jquery-1.11.3.js"></script>
+            <script src="/static/js/bootstrap.min.js"></script>
         {% endblock %}
         {% block title %}
             <div class=title>FLATLINE</div>
         {% endblock %}
         {% block nav %}
+            <ul class="nav nav-tabs">
+                <li><a href="/">Home</a></li>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button">Scanner</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/scanner/map">Map</a></li>
+                        <li><a href="/scanner/search">Search</a></li>
+                        <li><a href="/scanner/exploit">Exploits</a></li>
+                    </ul></li>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button">Passwords</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/passwords/hashes">Hashes</a></li>
+                        <li><a href="/passwords/password_checker">Password Checker</a></li>
+                    </ul></li>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button">Malware</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/malware/hashes">Hashes</a></li>
+                    </ul></li>
+            </ul>
         {% endblock %}
     </head>
     <body>

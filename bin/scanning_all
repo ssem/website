@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for f in `ls ~/old`
+do
+    echo "./scanning_fingerprint $f"
+    ./scanning_fingerprint ~/old/$f
+done
